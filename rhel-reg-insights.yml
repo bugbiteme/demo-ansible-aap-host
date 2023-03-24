@@ -1,0 +1,75 @@
+---
+
+- hosts: all
+  remote_user: ec2-user
+  become: true
+  vars_files: vars/reg-data.yml
+  tasks:
+  
+
+  - name: Wait for connection
+    wait_for_connection:
+      timeout: 300
+    
+  - name: Register RHEL with user/password and auto-subscribe to available content
+    redhat_subscription:
+      state: present
+      username: "{{ username }}"
+      password: "{{ password }}"
+      autosubscribe: true
+
+  - name: Install packages 
+    ansible.builtin.dnf:
+      name: 
+        - yara
+        - wget
+      state: latest
+
+  # prereq - install `redhatinsights.insights` module via ansible-galaxy
+  - name: Add RHEL system to insights
+    redhatinsights.insights.insights_register:
+      state: present
+
+  - name: Run Insights test malware scan 
+    ansible.builtin.command: sudo insights-client --collector malware-detection
+
+  - name: Enable scanning, set test_scan false in /etc/insights-client/malware-detection-config.yml
+    ansible.builtin.replace:
+      path: /etc/insights-client/malware-detection-config.yml
+      regexp: "test_scan: true"
+      replace: "test_scan: false"
+
+  - name: Run Insights full malware scan 
+    ansible.builtin.command: sudo insights-client --collector malware-detection
+
+  
+# AAP setup
+
+  - name: Copy AAP installer onto hosts
+    ansible.builtin.unarchive:
+      src: ansible-automation-platform-setup-bundle-2.2.2-1.tar.gz
+      dest: /home/ec2-user/
+
+  - name: copy template inventory to install directory
+    ansible.builtin.copy:
+      src: inventory.aap.install
+      dest: /home/ec2-user/ansible-automation-platform-setup-bundle-2.2.2-1/inventory
+  
+  - name: copy ansible.cfg to host
+    ansible.builtin.copy:
+      src: ansible.cfg
+      dest: /etc/ansible/ansible.cfg
+
+  - name: copy private ssh key
+    ansible.builtin.copy:
+      src: ec2-rhel-aap-key.pem
+      dest: /home/ec2-user/ansible-automation-platform-setup-bundle-2.2.2-1/ec2-rhel-aap-key.pem
+      mode: '0644'
+      owner: root
+      group: root
+
+  
+
+      
+    
+

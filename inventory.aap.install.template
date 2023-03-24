@@ -1,0 +1,55 @@
+[automationcontroller]
+54.183.114.111
+
+#[automationhub]
+#localhost
+
+[ansible_connection]
+localhost
+
+[all:vars]
+admin_password='redhat!'
+pg_host=''
+pg_port=''
+pg_database='awx'
+pg_username='awx'
+pg_password='redhat!'
+pg_sslmode='prefer'  # set to 'verify-full' for client-side enforced SSL
+
+registry_url='registry.redhat.io'
+registry_username='11902702|llevy'
+registry_password='eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJlMjBlMTFhMDRiNTI0MzAwYWY5N2Y0MzU1M2FmYzFjYiJ9.Lj2YR0bgC_EXNr-2rcxjVBe_Td2Cf_YRZO77wJSEiQjgHnnQV4p3-laL2OtjCihGk72E4CnvxR4KNj-9VMy5oB5irTcYehFszYa5Huh0RXcga2OI7M2V_z1sHJno2hWK1T0Njy3Vpobt6AFeVfgrpYwePPx0JjDc4QEeJf-aogW7XOatiFKkh1-w4esf_vaKnvhJzuGqvLAN3KFX7WxGpWAjzrA7XAGiQxEfSPZuQdb6drMgxa_eKGVjki1vNBlbbUJ7hbuHjYIQuILVfiEpUafq-1TVsTj8Q7T3u-81oeaqao_oOTsTAY9x6GxKPBTd3MPRPyCpXZS-HlpgK4CTgntR6mhorMH0zcmeH5m3wPp78a1XVXZh0TjX50sFXcYlL6HxVKtqQMHrOYiX1Zo6_Cq3Xfh9PwMYAa-e6rotoPxE9MYnPk7XplYsZ2HCsJC8TYO48IYZzyHAsUZnJxjr56kJaM3WnpltiFSxAiwRNixB5YoEHzCqy5V4hLp3sdhruxmUw83IRX4HfcHk-qMcCBm46l7RaXgLd6o5t7bOCrrUlr4cq_opzB2SxVvexu9BN7-CFQToJeMG6HlFzS0ZG_HRf0IWjFZvjjqRmTkEXopg-NseJ_BEpWO7buWIBpCoavxSz5juYd4StSSUt35rYVDRTlukIg5j7AabmtNWPLQ'
+
+# Automation Hub Configuration
+#
+automationhub_admin_password='redhat!'
+automationhub_pg_host='controller.acme.org'
+automationhub_pg_port='5432'
+automationhub_pg_database='automationhub'
+automationhub_pg_username='automationhub'
+automationhub_pg_password='redhat!'
+automationhub_pg_sslmode='prefer'
+
+# The default install will deploy a TLS enabled Automation Hub.
+# If for some reason this is not the behavior wanted one can
+# disable TLS enabled deployment.
+#
+# automationhub_disable_https = False
+# The default install will generate self-signed certificates for the Automation
+# Hub service. If you are providing valid certificate via automationhub_ssl_cert
+# and automationhub_ssl_key, one should toggle that value to True.
+#
+# automationhub_ssl_validate_certs = False
+# SSL-related variables
+# If set, this will install a custom CA certificate to the system trust store.
+# custom_ca_cert=/path/to/ca.crt
+# Certificate and key to install in nginx for the web UI and API
+# web_server_ssl_cert=/path/to/tower.cert
+# web_server_ssl_key=/path/to/tower.key
+# Certificate and key to install in Automation Hub node
+# automationhub_ssl_cert=/path/to/automationhub.cert
+# automationhub_ssl_key=/path/to/automationhub.key
+# Server-side SSL settings for PostgreSQL (when we are installing it).
+# postgres_use_ssl=False
+# postgres_ssl_cert=/path/to/pgsql.crt
+# postgres_ssl_key=/path/to/pgsql.key
