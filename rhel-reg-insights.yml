@@ -23,7 +23,16 @@
       name: 
         - yara
         - wget
+        - pip
+        - java-17-openjdk
       state: latest
+
+  - name: Install ansible-runbook preview
+    ansible.builtin.pip:
+      name:
+        - ansible-rulebook
+        - ansible-runner
+        - ansible-navigator
 
   # prereq - install `redhatinsights.insights` module via ansible-galaxy
   - name: Add RHEL system to insights
